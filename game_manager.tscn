@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://db2yxpuivxb15"]
+
+[ext_resource type="Texture2D" uid="uid://cpwccmg7ornyq" path="res://assets/background-purple.png" id="1_70yv6"]
+[ext_resource type="PackedScene" uid="uid://ukxqpfo7lq4k" path="res://entities/player/player.tscn" id="2_smx3j"]
+[ext_resource type="Texture2D" uid="uid://rvd67eptvya6" path="res://assets/horizontal_bar_blue.png" id="3_o2178"]
+[ext_resource type="PackedScene" uid="uid://bblhw4p84ajwc" path="res://entities/enemy_spawner/enemy_spawner.tscn" id="4_vk86k"]
+[ext_resource type="Script" uid="uid://cxe8ra82v5khy" path="res://entities/enemy_spawner/enemy_spawner.gd" id="5_shwjl"]
+[ext_resource type="Script" uid="uid://bfm6rohncjajq" path="res://game_over.gd" id="6_shwjl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smx3j"]
+size = Vector2(400, 19)
+
+[node name="GameManager" type="Node2D"]
+
+[node name="BackgroundSprite" type="Sprite2D" parent="."]
+position = Vector2(200, 300)
+scale = Vector2(1, 1.5)
+texture = ExtResource("1_70yv6")
+
+[node name="Player" parent="." instance=ExtResource("2_smx3j")]
+position = Vector2(200, 568)
+
+[node name="Boundary" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(200, 480)
+shape = SubResource("RectangleShape2D_smx3j")
+
+[node name="HorizontalBarBlue" type="Sprite2D" parent="Boundary"]
+position = Vector2(200, 480)
+scale = Vector2(3.07692, 1.6)
+texture = ExtResource("3_o2178")
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_vk86k")]
+script = ExtResource("5_shwjl")
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+script = ExtResource("6_shwjl")
+
+[node name="Panel" type="Panel" parent="GameOver"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title" type="Label" parent="GameOver/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "GAME OVER"
+
+[node name="RestartButton" type="Button" parent="GameOver/Panel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "RESTART"
